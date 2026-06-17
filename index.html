@@ -107,6 +107,7 @@
             border-radius: 8px;
             box-shadow: 0 8px 20px rgba(0,0,0,0.08);
             transition: transform 0.3s ease;
+            object-fit: cover;
         }
 
         .story-img:hover {
@@ -364,7 +365,7 @@
 
         .rsvp-image {
             width: 45%;
-            background: url('https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=1000') no-repeat center center/cover;
+            background: url('image2.png') no-repeat center center/cover;
         }
 
         form {
@@ -489,7 +490,7 @@
 
     <section class="story-section">
         <div class="story-container">
-            <img class="story-img" src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?q=80&w=1000" alt="Our Story Photo">
+            <img class="story-img" src="image1.png" alt="Our Story Photo">
             <div class="story-text">
                 <h2>Our Story</h2>
                 <p>Mula sa simpleng pagtitinginan, hanggang sa napagdesisyunan naming magsama habambuhay. Hinihiling namin ang inyong gabi upang saksihan ang aming walang hanggang sumpaan.</p>
@@ -621,7 +622,6 @@
     </footer>
 
     <script>
-        // Set the precise date in Philippine Time (GMT+8)
         const weddingDate = new Date("2026-07-26T15:00:00+08:00").getTime();
         
         const timer = setInterval(function() {
@@ -650,7 +650,6 @@
         }, 1000);
 
         document.getElementById('rsvpForm').addEventListener('submit', function(e) {
-            // Only show alert if form has no custom action endpoint handled by external service
             if(this.getAttribute('action') === '#') {
                 e.preventDefault();
                 alert('Thank you for your RSVP!');
