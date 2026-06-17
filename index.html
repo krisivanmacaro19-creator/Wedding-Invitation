@@ -6,7 +6,6 @@
     <meta name="referrer" content="strict-origin-when-cross-origin" />
     <title>Our Wedding Invitation</title>
     <style>
-        /* NAGDAGDAG NG MGA PANG-WEDDING NA FONTS DITO (Great Vibes at Playfair Display) */
         @import url('https://fonts.googleapis.com/css2?family=Alex+Brush&family=Great+Vibes&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Montserrat:wght=300;400;500;600&display=swap');
 
         :root {
@@ -28,8 +27,9 @@
             font-family: 'Montserrat', sans-serif;
             background-color: var(--bg-creame);
             color: var(--text-dark);
-            line-height: 1.7;
+            line-height: 1.6;
             text-align: center;
+            -webkit-text-size-adjust: 100%; /* Pinipigilan ang CP na baguhin ang size ng font nang pilit */
         }
 
         /* --- HERO SECTION --- */
@@ -55,7 +55,7 @@
         }
 
         .hero p {
-            font-size: 1.1rem;
+            font-size: clamp(0.85rem, 2.5vw, 1.1rem);
             letter-spacing: 4px;
             text-transform: uppercase;
             font-weight: 300;
@@ -63,15 +63,16 @@
             text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
         }
 
-        /* BINAGO: Ginawa nating 'Great Vibes' at mas pinalaki para mas eleganteng cursive */
+        /* INAYOS: Ginamitan ng clamp para mag-scale nang maayos mula CP (3.8rem) hanggang Desktop (8rem) */
         .hero h1 {
             font-family: 'Great Vibes', cursive;
-            font-size: 8rem;
+            font-size: clamp(3.8rem, 10vw, 8rem);
             color: #fdfbf7;
             margin: 10px 0;
             text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.4);
             font-weight: normal;
             letter-spacing: 2px;
+            line-height: 1.1;
         }
 
         .hero .date {
@@ -80,7 +81,7 @@
             border-top: 1px solid rgba(255, 255, 255, 0.6);
             border-bottom: 1px solid rgba(255, 255, 255, 0.6);
             padding: 12px 35px;
-            font-size: 1.4rem;
+            font-size: clamp(1rem, 3vw, 1.4rem);
             letter-spacing: 3px;
             background: rgba(44, 62, 38, 0.2);
             backdrop-filter: blur(3px);
@@ -88,7 +89,7 @@
 
         /* --- OUR STORY --- */
         .story-section {
-            padding: 100px 20px;
+            padding: clamp(50px, 8vw, 100px) 20px;
             max-width: 950px;
             margin: 0 auto;
         }
@@ -107,43 +108,42 @@
 
         .story-img {
             width: 45%;
+            height: auto;
+            max-height: 400px;
             border-radius: 8px;
             box-shadow: 0 8px 20px rgba(0,0,0,0.08);
             transition: transform 0.3s ease;
             object-fit: cover;
-        }
-
-        .story-img:hover {
-            transform: scale(1.02);
+            object-position: center;
         }
 
         .story-text {
             width: 55%;
-            padding-right: 20px;
         }
 
         .story-text h2 {
             font-family: 'Great Vibes', cursive;
-            font-size: 3.8rem;
+            font-size: clamp(2.8rem, 6vw, 3.8rem);
             color: var(--primary-rustic);
             margin-bottom: 15px;
             font-weight: normal;
+            line-height: 1.2;
         }
 
         .story-text p {
             color: #5a554e;
-            font-size: 1.05rem;
+            font-size: clamp(0.95rem, 2vw, 1.05rem);
         }
 
         /* --- PRENUP VIDEO --- */
         .video-section {
-            padding: 80px 20px;
+            padding: clamp(50px, 6vw, 80px) 20px;
             background-color: #f2ede4;
         }
 
         .video-section h2 {
             font-family: 'Great Vibes', cursive;
-            font-size: 3.8rem;
+            font-size: clamp(2.8rem, 6vw, 3.8rem);
             color: var(--primary-rustic);
             margin-bottom: 25px;
             font-weight: normal;
@@ -169,16 +169,14 @@
         .countdown-container {
             background-color: var(--primary-rustic);
             color: #ffffff;
-            padding: 60px 20px;
-            position: relative;
+            padding: 50px 15px;
         }
 
         .countdown-container h2 {
-            font-family: 'Montserrat', sans-serif;
             font-weight: 300;
             text-transform: uppercase;
-            letter-spacing: 4px;
-            font-size: 1.4rem;
+            letter-spacing: 3px;
+            font-size: clamp(1rem, 2.5vw, 1.4rem);
             color: var(--accent-gold);
             margin-bottom: 25px;
         }
@@ -186,16 +184,18 @@
         .countdown {
             display: flex;
             justify-content: center;
-            gap: 25px;
+            gap: clamp(10px, 3vw, 25px);
+            flex-wrap: nowrap; /* Pinipigilan masira ang linya sa CP */
         }
 
         .time-box {
             background: rgba(255, 255, 255, 0.06);
-            padding: 20px;
+            padding: clamp(10px, 2.5vw, 20px);
             border-radius: 8px;
-            min-width: 100px;
+            flex: 1;
+            max-width: 110px;
             border: 1px solid rgba(255, 255, 255, 0.1);
-            font-size: 0.85rem;
+            font-size: clamp(0.65rem, 1.8vw, 0.85rem);
             letter-spacing: 1px;
             text-transform: uppercase;
             color: #e3dece;
@@ -203,63 +203,60 @@
 
         .time-box span {
             display: block;
-            font-size: 2.8rem;
+            font-size: clamp(1.6rem, 5vw, 2.8rem);
             font-weight: 300;
             color: #ffffff;
             line-height: 1.2;
             margin-bottom: 5px;
-            font-family: 'Montserrat', sans-serif;
         }
 
         /* --- DETAILS CARD --- */
         .details {
-            padding: 100px 20px;
+            padding: clamp(50px, 8vw, 100px) 20px;
             max-width: 850px;
             margin: 0 auto;
         }
 
         .card {
             background: var(--card-bg);
-            padding: 60px 50px;
+            padding: clamp(35px, 6vw, 60px) clamp(20px, 5vw, 50px);
             border-radius: 4px;
             box-shadow: 0 15px 45px rgba(58, 53, 46, 0.08);
             border-top: 4px solid var(--accent-gold);
             border-bottom: 4px solid var(--accent-gold);
-            position: relative;
         }
 
         .section-title {
             font-family: 'Great Vibes', cursive;
-            font-size: 4rem;
+            font-size: clamp(3rem, 7vw, 4rem);
             color: var(--accent-gold);
             margin-bottom: 10px;
             font-weight: normal;
         }
 
         .card p strong {
-            letter-spacing: 2px;
+            letter-spacing: 1.5px;
             color: var(--text-dark);
-            font-size: 1.1rem;
+            font-size: clamp(0.95rem, 2vw, 1.1rem);
         }
 
         .venue-text {
             margin: 15px 0;
             color: #5a554e;
-            font-size: 1.05rem;
-            font-weight: 400;
+            font-size: clamp(0.95rem, 2vw, 1.05rem);
         }
 
         .italic-follow {
             font-style: italic;
             color: #7a7368;
-            font-size: 1.1rem;
+            font-size: clamp(0.95rem, 2vw, 1.1rem);
             margin-bottom: 20px;
         }
 
         .rustic-divider {
             border: 0;
             border-top: 1px dashed #d1c7bd;
-            margin: 45px 0;
+            margin: clamp(30px, 5vw, 45px) 0;
         }
 
         /* --- ATTIRE MULTI-COLUMN LAYOUT --- */
@@ -278,6 +275,7 @@
 
         .attire-side-img {
             flex: 1;
+            width: 100%;
             height: 320px;
             object-fit: contain;
             filter: drop-shadow(0 6px 12px rgba(0,0,0,0.08));
@@ -286,7 +284,7 @@
         .palette-container {
             display: flex;
             justify-content: center;
-            gap: 15px;
+            gap: clamp(8px, 2vw, 15px);
             margin: 25px 0 15px 0;
             flex-wrap: wrap;
         }
@@ -299,45 +297,38 @@
         }
 
         .color-dot {
-            width: 42px;
-            height: 42px;
+            width: clamp(35px, 4vw, 42px);
+            height: clamp(35px, 4vw, 42px);
             border-radius: 50%;
             box-shadow: inset 0 0 4px rgba(0,0,0,0.2), 0 4px 10px rgba(0,0,0,0.08);
-            transition: transform 0.2s ease;
-        }
-
-        .color-dot:hover {
-            transform: scale(1.15);
         }
 
         .color-name {
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             color: #7a7368;
             font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
         }
 
         /* --- REMINDER BOX --- */
         .reminder-box {
             background: #faf8f5;
-            padding: 35px 30px;
+            padding: clamp(25px, 4vw, 35px) clamp(15px, 3vw, 30px);
             border-radius: 4px;
-            margin: 50px 0 0 0;
+            margin-top: 40px;
             border: 1px dashed var(--accent-gold);
-            text-align: center;
         }
 
         .reminder-box h4 {
             font-family: 'Great Vibes', cursive;
-            font-size: 2.8rem;
+            font-size: clamp(2.2rem, 5vw, 2.8rem);
             color: var(--accent-gold);
             margin-bottom: 8px;
             font-weight: normal;
         }
 
         .reminder-box p {
-            font-size: 0.95rem;
+            font-size: clamp(0.85rem, 2vw, 0.95rem);
             color: #635d54;
         }
 
@@ -346,14 +337,14 @@
             color: #a43b3b;
             display: block;
             margin-top: 15px;
-            letter-spacing: 2px;
-            font-size: 0.85rem;
+            letter-spacing: 1.5px;
+            font-size: 0.8rem;
         }
 
         /* --- RSVP SECTION --- */
         .rsvp-section {
             background-color: #ebdcc5;
-            padding: 100px 20px;
+            padding: clamp(50px, 8vw, 100px) 20px;
         }
 
         .rsvp-container {
@@ -368,18 +359,18 @@
 
         .rsvp-image {
             width: 45%;
-            background: url('image1.png') no-repeat center center/cover;
+            background: url('image2.png') no-repeat center center/cover;
         }
 
         form {
             width: 55%;
-            padding: 60px 50px;
+            padding: clamp(35px, 5vw, 60px) clamp(20px, 4vw, 50px);
             text-align: left;
         }
 
         form h2 {
             font-family: 'Great Vibes', cursive;
-            font-size: 4rem;
+            font-size: clamp(3rem, 7vw, 4rem);
             color: var(--primary-rustic);
             line-height: 1;
             margin-bottom: 12px;
@@ -388,16 +379,16 @@
 
         form p {
             color: #6e675d;
-            line-height: 1.6;
+            font-size: clamp(0.9rem, 2vw, 0.95rem);
         }
 
-        .form-group { margin-bottom: 25px; }
+        .form-group { margin-bottom: 20px; }
         
         label { 
             display: block; 
-            margin-bottom: 8px; 
+            margin-bottom: 6px; 
             font-weight: 500; 
-            font-size: 0.85rem; 
+            font-size: 0.8rem; 
             text-transform: uppercase;
             letter-spacing: 1px;
             color: var(--primary-rustic);
@@ -405,24 +396,17 @@
         
         input, select, textarea { 
             width: 100%; 
-            padding: 14px; 
+            padding: 12px; 
             border: 1px solid #dcd3c7; 
             border-radius: 6px; 
             font-family: 'Montserrat', sans-serif;
-            background-color: #fdfdfb;
-            color: var(--text-dark);
             font-size: 0.95rem;
             outline: none;
-            transition: border-color 0.3s;
-        }
-
-        input:focus, select:focus, textarea:focus {
-            border-color: var(--accent-gold);
         }
         
         button {
             width: 100%;
-            padding: 16px;
+            padding: 14px;
             background-color: var(--primary-rustic);
             color: white;
             border: none;
@@ -430,45 +414,38 @@
             font-size: 0.95rem;
             cursor: pointer;
             font-weight: 600;
-            letter-spacing: 2px;
+            letter-spacing: 1.5px;
             text-transform: uppercase;
-            transition: background-color 0.3s, transform 0.2s;
             margin-top: 10px;
-            box-shadow: 0 5px 15px rgba(44, 62, 38, 0.15);
         }
 
-        button:hover {
-            background-color: #1e2b1a;
-            transform: translateY(-1px);
-        }
-
-        /* --- RESPONSIVE MEDIA --- */
+        /* --- RESPONSIVE MEDIA FOR SMARTPHONES (CP) --- */
         @media (max-width: 768px) {
             .story-container, .rsvp-container {
                 flex-direction: column;
+                gap: 25px;
+                padding: 25px 15px;
             }
             .story-img, .story-text, .rsvp-image, form {
                 width: 100%;
             }
+            .story-img {
+                max-height: 260px;
+            }
             .story-text {
-                padding-right: 0;
-                margin-top: 20px;
+                text-align: center;
             }
             .rsvp-image {
-                height: 280px;
+                height: 220px;
             }
-            .hero h1 { font-size: 5rem; } /* Adjusted for mobile view */
-            .card { padding: 40px 20px; }
-            
             .attire-side-layout {
                 flex-direction: column;
                 gap: 20px;
-                align-items: center;
             }
             .attire-side-img {
-                width: 160px;
+                max-width: 160px;
                 height: auto;
-                max-width: 50%;
+                max-height: 220px;
             }
             .attire-side-img:nth-of-type(1) { order: 2; }
             .attire-info { order: 1; }
@@ -476,12 +453,11 @@
         }
 
         footer { 
-            padding: 50px 20px; 
-            font-size: 0.9rem; 
+            padding: 40px 20px; 
+            font-size: 0.85rem; 
             background: #ffffff; 
             color: #7a7368;
-            letter-spacing: 1px;
-            border-top: 1px solid #f2ede4;
+            letter-spacing: 0.5px;
         }
     </style>
 </head>
