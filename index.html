@@ -38,8 +38,9 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
+            /* BINAGO: Pinalitan ng image3.png ang background photo dito */
             background: linear-gradient(rgba(44, 62, 38, 0.45), rgba(58, 53, 46, 0.5)), 
-                        url('https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1920') no-repeat center center/cover;
+                        url('image3.png') no-repeat center center/cover;
             padding: 20px;
             color: #ffffff;
             position: relative;
@@ -365,7 +366,8 @@
 
         .rsvp-image {
             width: 45%;
-            background: url('image2.png') no-repeat center center/cover;
+            /* BINAGO: Pinalitan din ng image3.png ang background photo sa RSVP layout */
+            background: url('image3.png') no-repeat center center/cover;
         }
 
         form {
@@ -588,14 +590,7 @@
     <section class="rsvp-section">
         <div class="rsvp-container">
             <div class="rsvp-image"></div>
-            <form id="rsvpForm" action="https://api.web3forms.com/submit" method="POST">
-                  <input type="hidden" name="access_key" value="6acdb63c-5892-4826-8171-c741ce230b6d">
-  <input type="text" name="name" required>
-  <input type="email" name="email" required>
-  <textarea name="message" required></textarea>
-  <button type="submit">Submit</button>
-</form>
-
+            <form id="rsvpForm" action="#" method="POST">
                 <h2>Kindly RSVP</h2>
                 <p style="font-size: 0.95rem; margin-bottom: 25px;">
                     A favor of your reply is requested from before <strong>July 20, 2026</strong>.<br>
