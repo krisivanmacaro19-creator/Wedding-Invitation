@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <title>Our Wedding Invitation</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Alex+Brush&family=Montserrat:wght@300;400;500;600&display=swap');
+
+        :root {
+            --primary-rustic: #2c3e26;     /* Deep Forest/Sage tone */
+            --accent-gold: #b3864c;        /* Muted Gold/Amber */
+            --terracotta: #a8583b;         /* Earthy Terracotta */
+            --bg-creame: #f6f3ea;          /* Warm Earthy Background */
+            --text-dark: #3a352e;          /* Soft Charcoal Brown */
+            --card-bg: #ffffff;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--bg-creame);
+            color: var(--text-dark);
+            line-height: 1.7;
+            text-align: center;
+        }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(rgba(44, 62, 38, 0.45), rgba(58, 53, 46, 0.5)), 
+                        url('https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1920') no-repeat center center/cover;
+            padding: 20px;
+            color: #ffffff;
+            position: relative;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: 20px; bottom: 20px; left: 20px; right: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            pointer-events: none;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            font-weight: 300;
+            color: #fcfaf2;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+        }
+
+        .hero h1 {
+            font-family: 'Alex Brush', cursive;
+            font-size: 6.5rem;
+            color: #fdfbf7;
+            margin: 15px 0;
+            text-shadow: 2px 2px 8px rgba(44, 62, 38, 0.5);
+            font-weight: normal;
+        }
+
+        .hero .date {
+            margin-top: 25px;
+            font-weight: 500;
+            border-top: 1px solid rgba(255, 255, 255, 0.6);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.6);
+            padding: 12px 35px;
+            font-size: 1.4rem;
+            letter-spacing: 3px;
+            background: rgba(44, 62, 38, 0.2);
+            backdrop-filter: blur(3px);
+        }
+
+        /* --- OUR STORY --- */
+        .story-section {
+            padding: 100px 20px;
+            max-width: 950px;
+            margin: 0 auto;
+        }
+
+        .story-container {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+            text-align: left;
+            background: var(--card-bg);
+            padding: 45px 35px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(44, 62, 38, 0.04);
+            border: 1px solid #f2ede4;
+        }
+
+        .story-img {
+            width: 45%;
+            border-radius: 8px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease;
+        }
+
+        .story-img:hover {
+            transform: scale(1.02);
+        }
+
+        .story-text {
+            width: 55%;
+            padding-right: 20px;
+        }
+
+        .story-text h2 {
+            font-family: 'Alex Brush', cursive;
+            font-size: 3.8rem;
+            color: var(--primary-rustic);
+            margin-bottom: 15px;
+            font-weight: normal;
+        }
+
+        .story-text p {
+            color: #5a554e;
+            font-size: 1.05rem;
+        }
+
+        /* --- PRENUP VIDEO --- */
+        .video-section {
+            padding: 80px 20px;
+            background-color: #f2ede4;
+        }
+
+        .video-section h2 {
+            font-family: 'Alex Brush', cursive;
+            font-size: 3.8rem;
+            color: var(--primary-rustic);
+            margin-bottom: 25px;
+            font-weight: normal;
+        }
+
+        .video-wrapper {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            padding-bottom: 56.25%; 
+            height: 0;
+            overflow: hidden;
+            border-radius: 12px;
+            box-shadow: 0 12px 35px rgba(44, 62, 38, 0.15);
+        }
+
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%; border: 0;
+        }
+
+        /* --- COUNTDOWN --- */
+        .countdown-container {
+            background-color: var(--primary-rustic);
+            color: #ffffff;
+            padding: 60px 20px;
+            position: relative;
+        }
+
+        .countdown-container h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 300;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            font-size: 1.4rem;
+            color: var(--accent-gold);
+            margin-bottom: 25px;
+        }
+
+        .countdown {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+        }
+
+        .time-box {
+            background: rgba(255, 255, 255, 0.06);
+            padding: 20px;
+            border-radius: 8px;
+            min-width: 100px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: #e3dece;
+        }
+
+        .time-box span {
+            display: block;
+            font-size: 2.8rem;
+            font-weight: 300;
+            color: #ffffff;
+            line-height: 1.2;
+            margin-bottom: 5px;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        /* --- DETAILS CARD --- */
+        .details {
+            padding: 100px 20px;
+            max-width: 850px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: var(--card-bg);
+            padding: 60px 50px;
+            border-radius: 4px;
+            box-shadow: 0 15px 45px rgba(58, 53, 46, 0.08);
+            border-top: 4px solid var(--accent-gold);
+            border-bottom: 4px solid var(--accent-gold);
+            position: relative;
+        }
+
+        .section-title {
+            font-family: 'Alex Brush', cursive;
+            font-size: 4rem;
+            color: var(--accent-gold);
+            margin-bottom: 10px;
+            font-weight: normal;
+        }
+
+        .card p strong {
+            letter-spacing: 2px;
+            color: var(--text-dark);
+            font-size: 1.1rem;
+        }
+
+        .venue-text {
+            margin: 15px 0;
+            color: #5a554e;
+            font-size: 1.05rem;
+            font-weight: 400;
+        }
+
+        .italic-follow {
+            font-style: italic;
+            color: #7a7368;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+        }
+
+        .rustic-divider {
+            border: 0;
+            border-top: 1px dashed #d1c7bd;
+            margin: 45px 0;
+        }
+
+        /* --- ATTIRE MULTI-COLUMN LAYOUT --- */
+        .attire-side-layout {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 35px;
+            gap: 25px;
+        }
+
+        .attire-info {
+            flex: 1.2;
+            text-align: center;
+        }
+
+        .attire-side-img {
+            flex: 1;
+            height: 320px;
+            object-fit: contain;
+            filter: drop-shadow(0 6px 12px rgba(0,0,0,0.08));
+        }
+
+        .palette-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 25px 0 15px 0;
+            flex-wrap: wrap;
+        }
+
+        .color-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .color-dot {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            box-shadow: inset 0 0 4px rgba(0,0,0,0.2), 0 4px 10px rgba(0,0,0,0.08);
+            transition: transform 0.2s ease;
+        }
+
+        .color-dot:hover {
+            transform: scale(1.15);
+        }
+
+        .color-name {
+            font-size: 0.75rem;
+            color: #7a7368;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* --- REMINDER BOX --- */
+        .reminder-box {
+            background: #faf8f5;
+            padding: 35px 30px;
+            border-radius: 4px;
+            margin: 50px 0 0 0;
+            border: 1px dashed var(--accent-gold);
+            text-align: center;
+        }
+
+        .reminder-box h4 {
+            font-family: 'Alex Brush', cursive;
+            font-size: 2.8rem;
+            color: var(--accent-gold);
+            margin-bottom: 8px;
+            font-weight: normal;
+        }
+
+        .reminder-box p {
+            font-size: 0.95rem;
+            color: #635d54;
+        }
+
+        .reminder-box .highlight-no {
+            font-weight: 600;
+            color: #a43b3b;
+            display: block;
+            margin-top: 15px;
+            letter-spacing: 2px;
+            font-size: 0.85rem;
+        }
+
+        /* --- RSVP SECTION --- */
+        .rsvp-section {
+            background-color: #ebdcc5;
+            padding: 100px 20px;
+        }
+
+        .rsvp-container {
+            max-width: 950px;
+            margin: 0 auto;
+            display: flex;
+            background: var(--card-bg);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(44, 62, 38, 0.12);
+        }
+
+        .rsvp-image {
+            width: 45%;
+            background: url('https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=1000') no-repeat center center/cover;
+        }
+
+        form {
+            width: 55%;
+            padding: 60px 50px;
+            text-align: left;
+        }
+
+        form h2 {
+            font-family: 'Alex Brush', cursive;
+            font-size: 4rem;
+            color: var(--primary-rustic);
+            line-height: 1;
+            margin-bottom: 12px;
+            font-weight: normal;
+        }
+
+        form p {
+            color: #6e675d;
+            line-height: 1.6;
+        }
+
+        .form-group { margin-bottom: 25px; }
+        
+        label { 
+            display: block; 
+            margin-bottom: 8px; 
+            font-weight: 500; 
+            font-size: 0.85rem; 
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--primary-rustic);
+        }
+        
+        input, select { 
+            width: 100%; 
+            padding: 14px; 
+            border: 1px solid #dcd3c7; 
+            border-radius: 6px; 
+            font-family: 'Montserrat', sans-serif;
+            background-color: #fdfdfb;
+            color: var(--text-dark);
+            font-size: 0.95rem;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        input:focus, select:focus {
+            border-color: var(--accent-gold);
+        }
+        
+        button {
+            width: 100%;
+            padding: 16px;
+            background-color: var(--primary-rustic);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            cursor: pointer;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            transition: background-color 0.3s, transform 0.2s;
+            margin-top: 10px;
+            box-shadow: 0 5px 15px rgba(44, 62, 38, 0.15);
+        }
+
+        button:hover {
+            background-color: #1e2b1a;
+            transform: translateY(-1px);
+        }
+
+        /* --- RESPONSIVE MEDIA --- */
+        @media (max-width: 768px) {
+            .story-container, .rsvp-container {
+                flex-direction: column;
+            }
+            .story-img, .story-text, .rsvp-image, form {
+                width: 100%;
+            }
+            .story-text {
+                padding-right: 0;
+                margin-top: 20px;
+            }
+            .rsvp-image {
+                height: 280px;
+            }
+            .hero h1 { font-size: 4.2rem; }
+            .card { padding: 40px 20px; }
+            
+            .attire-side-layout {
+                flex-direction: column;
+                gap: 30px;
+            }
+            .attire-side-img {
+                height: 240px;
+            }
+            .attire-side-img:nth-of-type(1) { order: 2; }
+            .attire-info { order: 1; }
+            .attire-side-img:nth-of-type(2) { order: 3; }
+        }
+
+        footer { 
+            padding: 50px 20px; 
+            font-size: 0.9rem; 
+            background: #ffffff; 
+            color: #7a7368;
+            letter-spacing: 1px;
+            border-top: 1px solid #f2ede4;
+        }
+    </style>
+</head>
+<body>
+
+    <section class="hero">
+        <p>Together with their families</p>
+        <h1>Rola & Ivan</h1>
+        <p>Invite you to celebrate their marriage</p>
+        <div class="date">JULY 26, 2026</div>
+    </section>
+
+    <section class="story-section">
+        <div class="story-container">
+            <img class="story-img" src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?q=80&w=1000" alt="Our Story Photo">
+            <div class="story-text">
+                <h2>Our Story</h2>
+                <p>Mula sa simpleng pagtitinginan, hanggang sa napagdesisyunan naming magsama habambuhay. Hinihiling namin ang inyong gabi upang saksihan ang aming walang hanggang sumpaan.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="video-section">
+        <h2>Our Prenup Video</h2>
+        <div class="video-wrapper">
+            <iframe 
+                src="https://www.youtube.com/embed/jyyf9vXm6H0?rel=0&modestbranding=1" 
+                title="Test Wedding Video"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                allowfullscreen>
+            </iframe>
+        </div>
+    </section>
+
+    <section class="countdown-container">
+        <h2>Counting Down to the Big Day</h2>
+        <div class="countdown">
+            <div class="time-box"><span id="days">00</span>Days</div>
+            <div class="time-box"><span id="hours">00</span>Hrs</div>
+            <div class="time-box"><span id="minutes">00</span>Mins</div>
+            <div class="time-box"><span id="seconds">00</span>Secs</div>
+        </div>
+    </section>
+
+    <section class="details">
+        <div class="card">
+            <h3 class="section-title">Reception</h3>
+            <p><strong>SUNDAY, JUL 26, 2026 AT 3 PM</strong></p>
+            <p class="venue-text">
+                Daluyan Community Resource Center<br>Naic, Cavite
+            </p>
+            <p class="italic-follow">Reception to Follow</p>
+            
+            <hr class="rustic-divider">
+
+            <h3 class="section-title">Attire</h3>
+            
+            <div class="attire-side-layout">
+                <img class="attire-side-img" src="suit.png" alt="Groom Suit" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1594938298603-c8148c4dae35?q=80&w=500';">
+                
+                <div class="attire-info">
+                    <p style="font-size: 0.95rem; color: #635d54; max-width: 340px; margin: 0 auto; font-weight: 500;">
+                        We encourage our guests to wear semi-formal attire with these earthy rustic colors:
+                    </p>
+                    <div class="palette-container">
+                        <div class="color-wrapper">
+                            <div class="color-dot" style="background-color: #3d2314;"></div>
+                            <span class="color-name">Brown</span>
+                        </div>
+                        <div class="color-wrapper">
+                            <div class="color-dot" style="background-color: #a76d39;"></div>
+                            <span class="color-name">Tan</span>
+                        </div>
+                        <div class="color-wrapper">
+                            <div class="color-dot" style="background-color: #cf9c63;"></div>
+                            <span class="color-name">Nude</span>
+                        </div>
+                        <div class="color-wrapper">
+                            <div class="color-dot" style="background-color: #dfba8c;"></div>
+                            <span class="color-name">Beige</span>
+                        </div>
+                        <div class="color-wrapper">
+                            <div class="color-dot" style="background-color: #eddcc4;"></div>
+                            <span class="color-name">Cream</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <img class="attire-side-img" src="dress.png" alt="Bride Dress" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1595777457583-95e059d581b8?q=80&w=500';">
+            </div>
+
+            <hr class="rustic-divider">
+
+            <h3 class="section-title">A Note on Gifts</h3>
+            <p style="font-size: 0.95rem; font-style: italic; color: #635d54; max-width: 600px; margin: 10px auto 0; line-height: 1.7;">
+                "With all that we have, we've been truly blessed. Your presence and prayers serve all that we request, but if you desire to give us nonetheless, monetary gift is one messenger."
+            </p>
+
+            <div class="reminder-box">
+                <h4>A loving reminder</h4>
+                <p>We kindly request that this is an intimate celebration. Please understand that we can only accommodate those listed on the invitation.</p>
+                <span class="highlight-no">NO +1, THANK YOU FOR UNDERSTANDING.</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="rsvp-section">
+        <div class="rsvp-container">
+            <div class="rsvp-image"></div>
+            <form id="rsvpForm" action="#" method="POST">
+                <h2>Kindly RSVP</h2>
+                <p style="font-size: 0.95rem; margin-bottom: 25px;">
+                    A favor of your reply is requested from before <strong>July 20, 2026</strong>.<br>
+                    <span style="display: block; margin-top: 8px; font-size: 0.9rem; color: #8c7f6e;">Message us at 09669908354 or thru its messenger.</span>
+                </p>
+                
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" name="name" required placeholder="Your Name">
+                </div>
+                <div class="form-group">
+                    <label for="attendance">Will you attend?</label>
+                    <select id="attendance" name="attendance" required>
+                        <option value="" disabled selected>Select an option</option>
+                        <option value="yes">Joyfully Accept</option>
+                        <option value="no">Regretfully Decline</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="seats">Reserved Seat/s</label>
+                    <select id="seats" name="seats">
+                        <option value="1">1 Seat</option>
+                        <option value="2">2 Seats</option>
+                    </select>
+                </div>
+
+                <button type="submit">Submit RSVP</button>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <p>Thank you for being a part of our lives! &nbsp;|&nbsp; #RolaAndIvan2026</p>
+    </footer>
+
+    <script>
+        // Set the precise date in Philippine Time (GMT+8)
+        const weddingDate = new Date("2026-07-26T15:00:00+08:00").getTime();
+        
+        const timer = setInterval(function() {
+            const now = new Date().getTime();
+            const distance = weddingDate - now;
+            
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            if (distance < 0) {
+                clearInterval(timer);
+                document.getElementById("days").innerText = "00";
+                document.getElementById("hours").innerText = "00";
+                document.getElementById("minutes").innerText = "00";
+                document.getElementById("seconds").innerText = "00";
+                document.querySelector(".countdown-container h2").innerText = "We're Married!";
+                document.querySelector(".countdown").style.display = "none";
+            } else {
+                document.getElementById("days").innerText = days < 10 ? "0" + days : days;
+                document.getElementById("hours").innerText = hours < 10 ? "0" + hours : hours;
+                document.getElementById("minutes").innerText = minutes < 10 ? "0" + minutes : minutes;
+                document.getElementById("seconds").innerText = seconds < 10 ? "0" + seconds : seconds;
+            }
+        }, 1000);
+
+        document.getElementById('rsvpForm').addEventListener('submit', function(e) {
+            // Only show alert if form has no custom action endpoint handled by external service
+            if(this.getAttribute('action') === '#') {
+                e.preventDefault();
+                alert('Thank you for your RSVP!');
+            }
+        });
+    </script>
+</body>
+</html>
