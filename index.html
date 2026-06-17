@@ -38,7 +38,6 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            /* BINAGO: Pinalitan ng image3.png ang background photo dito */
             background: linear-gradient(rgba(44, 62, 38, 0.45), rgba(58, 53, 46, 0.5)), 
                         url('image3.png') no-repeat center center/cover;
             padding: 20px;
@@ -366,7 +365,6 @@
 
         .rsvp-image {
             width: 45%;
-            /* BINAGO: Pinalitan din ng image3.png ang background photo sa RSVP layout */
             background: url('image3.png') no-repeat center center/cover;
         }
 
@@ -402,7 +400,7 @@
             color: var(--primary-rustic);
         }
         
-        input, select { 
+        input, select, textarea { 
             width: 100%; 
             padding: 14px; 
             border: 1px solid #dcd3c7; 
@@ -415,7 +413,7 @@
             transition: border-color 0.3s;
         }
 
-        input:focus, select:focus {
+        input:focus, select:focus, textarea:focus {
             border-color: var(--accent-gold);
         }
         
@@ -590,7 +588,10 @@
     <section class="rsvp-section">
         <div class="rsvp-container">
             <div class="rsvp-image"></div>
-            <form id="rsvpForm" action="#" method="POST">
+            
+            <form id="rsvpForm" action="https://api.web3forms.com/submit" method="POST">
+                <input type="hidden" name="access_key" value="6acdb63c-5892-4826-8171-c741ce230b6d">
+                
                 <h2>Kindly RSVP</h2>
                 <p style="font-size: 0.95rem; margin-bottom: 25px;">
                     A favor of your reply is requested from before <strong>July 20, 2026</strong>.<br>
@@ -601,20 +602,32 @@
                     <label for="name">Full Name</label>
                     <input type="text" id="name" name="name" required placeholder="Your Name">
                 </div>
+
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" required placeholder="yourname@email.com">
+                </div>
+
                 <div class="form-group">
                     <label for="attendance">Will you attend?</label>
                     <select id="attendance" name="attendance" required>
                         <option value="" disabled selected>Select an option</option>
-                        <option value="yes">Joyfully Accept</option>
-                        <option value="no">Regretfully Decline</option>
+                        <option value="Joyfully Accept">Joyfully Accept</option>
+                        <option value="Regretfully Decline">Regretfully Decline</option>
                     </select>
                 </div>
+
                 <div class="form-group">
                     <label for="seats">Reserved Seat/s</label>
                     <select id="seats" name="seats">
-                        <option value="1">1 Seat</option>
-                        <option value="2">2 Seats</option>
+                        <option value="1 Seat">1 Seat</option>
+                        <option value="2 Seats">2 Seats</option>
                     </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="message">Message / Note (Optional)</label>
+                    <textarea id="message" name="message" rows="3" placeholder="Leave a message for the couple..."></textarea>
                 </div>
 
                 <button type="submit">Submit RSVP</button>
