@@ -459,10 +459,13 @@
             
             .attire-side-layout {
                 flex-direction: column;
-                gap: 30px;
+                gap: 20px;
+                align-items: center; /* Nilalagay sa gitna ang lahat */
             }
             .attire-side-img {
-                height: 240px;
+                width: 160px;       /* Nilimitahan ang lapad para sakto sa CP */
+                height: auto;        /* Kusa nitong aayusin ang height para hindi mabanat */
+                max-width: 50%;
             }
             .attire-side-img:nth-of-type(1) { order: 2; }
             .attire-info { order: 1; }
