@@ -5,13 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="referrer" content="strict-origin-when-cross-origin" />
     <title>Our Wedding Invitation</title>
+    
+    <script src="https://js.hcaptcha.com/1/api.js" async defer></script>
+
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Alex+Brush&family=Great+Vibes&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Montserrat:wght@300;400;500;600&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Alex+Brush&family=Great+Vibes&family=Playfair+Display:ital,wght=0,400..900;1,400..900&family=Montserrat:wght=300;400;500;600&display=swap');
 
         :root {
             --primary-rustic: #2c3e26;     /* Deep Forest/Sage tone */
             --accent-gold: #b3864c;        /* Muted Gold/Amber */
-            --terracotta: #a8583b;         /* Earthy Terracotta */
+            --terracotta: #a8583b;          /* Earthy Terracotta */
             --bg-creame: #f6f3ea;          /* Warm Earthy Background */
             --text-dark: #3a352e;          /* Soft Charcoal Brown */
             --card-bg: #ffffff;
@@ -272,7 +275,7 @@
             margin: clamp(30px, 5vw, 45px) 0;
         }
 
-        /* --- NEW ATTIRE GUIDE INTERFACE (IMAGE ONLY) --- */
+        /* --- ATTIRE GUIDE --- */
         .attire-section-header {
             margin-bottom: 25px;
         }
@@ -436,21 +439,6 @@
             transform: scale(1.05);
         }
 
-        @media (max-width: 768px) {
-            .attire-image-wrapper {
-                max-width: 100%;
-                border-radius: 8px;
-            }
-            .lightbox-close {
-                top: 15px;
-                right: 15px;
-            }
-            .download-guide-btn {
-                width: 100%;
-                box-sizing: border-box;
-            }
-        }
-
         /* --- REMINDER BOX --- */
         .reminder-box {
             background: #faf8f5;
@@ -521,6 +509,7 @@
         form p {
             color: #6e675d;
             font-size: clamp(0.9rem, 2vw, 0.95rem);
+            margin-bottom: 20px;
         }
 
         .form-group { margin-bottom: 20px; }
@@ -560,6 +549,18 @@
             margin-top: 10px;
         }
 
+        /* 3. HCAPTCHA STYLING (Para maging responsive at pantay sa mobile at desktop) */
+        .captcha-container {
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: flex-start;
+        }
+        @media (max-width: 768px) {
+            .captcha-container {
+                justify-content: center; /* Gitna kapag smartphone */
+            }
+        }
+
         /* --- RESPONSIVE MEDIA FOR SMARTPHONES (CP) --- */
         @media (max-width: 768px) {
             .story-container, .rsvp-container {
@@ -579,6 +580,18 @@
             .rsvp-image {
                 height: 220px;
             }
+            .download-guide-btn {
+                width: 100%;
+                box-sizing: border-box;
+            }
+            .attire-image-wrapper {
+                max-width: 100%;
+                border-radius: 8px;
+            }
+            .lightbox-close {
+                top: 15px;
+                right: 15px;
+            }
         }
 
         footer { 
@@ -588,230 +601,7 @@
             color: #7a7368;
             letter-spacing: 0.5px;
         }
-        /* --- TIMELINE SECTION --- */
-        .timeline-section {
-            padding: clamp(50px, 8vw, 100px) 20px;
-            background-color: var(--bg-creame);
-        }
-
-        .timeline-container {
-            max-width: 580px;
-            margin: 40px auto;
-            background: #e9dbca; /* Wood-like tan background */
-            background-image: repeating-linear-gradient(90deg, transparent, transparent 48px, rgba(110, 80, 50, 0.04) 48px, rgba(110, 80, 50, 0.04) 50px);
-            border: 6px solid #b18967;
-            border-bottom: 10px solid #997554;
-            border-radius: 200px 200px 20px 20px;
-            padding: 90px 30px 40px 30px;
-            box-shadow: 0 15px 40px rgba(58, 53, 46, 0.15);
-            position: relative;
-        }
-
-        /* Top wooden peg */
-        .timeline-container::before {
-            content: '';
-            position: absolute;
-            top: -20px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 44px;
-            height: 20px;
-            background: #997554;
-            border: 6px solid #b18967;
-            border-bottom: none;
-            border-radius: 6px 6px 0 0;
-            z-index: 1;
-        }
-
-        /* Bottom wooden peg */
-        .timeline-container::after {
-            content: '';
-            position: absolute;
-            bottom: -30px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 44px;
-            height: 30px;
-            background: #997554;
-            border: 6px solid #b18967;
-            border-top: none;
-            border-radius: 0 0 6px 6px;
-            z-index: 1;
-        }
-
-        .timeline-svg-title {
-            width: 100%;
-            height: 75px;
-            margin-bottom: 20px;
-            display: block;
-        }
-
-        .timeline-pathway {
-            position: relative;
-            margin: 30px auto;
-            width: 3px;
-            background-color: #3a352e; /* dark charcoal line */
-            height: 520px; /* fixed height for line to hold all nodes */
-        }
-
-        .timeline-node {
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            align-items: center;
-            width: 420px;
-            pointer-events: none;
-        }
-
-        /* Set positions for each of the 5 events along the vertical pathway */
-        .timeline-node:nth-child(1) { top: 20px; }
-        .timeline-node:nth-child(2) { top: 120px; }
-        .timeline-node:nth-child(3) { top: 220px; }
-        .timeline-node:nth-child(4) { top: 320px; }
-        .timeline-node:nth-child(5) { top: 420px; }
-
-        .timeline-node-dot {
-            width: 10px;
-            height: 10px;
-            background-color: #3a352e;
-            border-radius: 50%;
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            box-shadow: 0 0 0 4px #e9dbca;
-            z-index: 2;
-        }
-
-        .timeline-content-card {
-            width: 190px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            position: absolute;
-        }
-
-        /* Odd nodes on the left */
-        .timeline-node.left .timeline-content-card {
-            right: calc(50% + 25px);
-        }
-
-        /* Even nodes on the right */
-        .timeline-node.right .timeline-content-card {
-            left: calc(50% + 25px);
-        }
-
-        .timeline-icon-box {
-            width: 50px;
-            height: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 6px;
-            transition: transform 0.3s ease;
-        }
-
-        .timeline-node:hover .timeline-icon-box {
-            transform: scale(1.1);
-        }
-
-        .timeline-icon-box svg {
-            width: 42px;
-            height: 42px;
-            stroke: #5c4533; /* rustic brown color for icons */
-            fill: none;
-            stroke-width: 1.2;
-            stroke-linecap: round;
-            stroke-linejoin: round;
-        }
-
-        .timeline-event-name {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 0.85rem;
-            font-weight: 700;
-            color: #3a352e;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 2px;
-            line-height: 1.2;
-        }
-
-        .timeline-event-time {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: #70553e;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .timeline-footer-names {
-            font-family: 'Great Vibes', cursive;
-            font-size: 3.5rem;
-            color: #3a352e;
-            text-align: center;
-            margin-top: 10px; /* pull under timeline height */
-            line-height: 1.2;
-            letter-spacing: 1px;
-        }
-
-        /* Responsive timeline */
-        @media (max-width: 550px) {
-            .timeline-container {
-                max-width: 100%;
-                border-radius: 120px 120px 20px 20px;
-                padding-top: 75px;
-            }
-
-            .timeline-pathway {
-                margin: 20px 0 20px 25px; /* shift to the left */
-                height: 580px;
-            }
-
-            .timeline-node {
-                width: 100%;
-                left: 0;
-                transform: none;
-            }
-            
-            .timeline-node:nth-child(1) { top: 20px; }
-            .timeline-node:nth-child(2) { top: 130px; }
-            .timeline-node:nth-child(3) { top: 240px; }
-            .timeline-node:nth-child(4) { top: 350px; }
-            .timeline-node:nth-child(5) { top: 460px; }
-
-            .timeline-node-dot {
-                left: 0;
-                transform: translateX(-50%);
-            }
-
-            .timeline-content-card {
-                left: 30px !important;
-                right: auto !important;
-                width: calc(100% - 60px);
-                flex-direction: row;
-                text-align: left;
-                align-items: center;
-                gap: 15px;
-            }
-
-            .timeline-icon-box {
-                margin-bottom: 0;
-                width: 44px;
-                height: 44px;
-            }
-
-            .timeline-icon-box svg {
-                width: 36px;
-                height: 36px;
-            }
-
-            .timeline-text-group {
-                display: flex;
-                flex-direction: column;
-            }
-        }
+        
     </style>
 </head>
 <body>
@@ -841,7 +631,7 @@
                 title="Test Wedding Video"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
                 allowfullscreen>
-            </iframe>
+            </table>
         </div>
     </section>
 
@@ -855,7 +645,6 @@
         </div>
     </section>
 
-    <!-- TIMELINE SECTION -->
     <section class="timeline-section">
         <div class="timeline-container">
             <svg viewBox="0 0 400 60" class="timeline-svg-title">
@@ -868,13 +657,11 @@
             </svg>
 
             <div class="timeline-pathway">
-                <!-- 1. Ceremony -->
                 <div class="timeline-node left">
                     <div class="timeline-node-dot"></div>
                     <div class="timeline-content-card">
                         <div class="timeline-icon-box">
                             <svg viewBox="0 0 24 24">
-                                <!-- Candle on Wood Log -->
                                 <ellipse cx="12" cy="16" rx="6" ry="3" />
                                 <path d="M6 16v3.5c0 1.9 2.7 3.5 6 3.5s6-1.6 6-3.5V16" />
                                 <rect x="10" y="8" width="4" height="8" rx="1" />
@@ -889,13 +676,11 @@
                     </div>
                 </div>
 
-                <!-- 2. Pictorial -->
                 <div class="timeline-node right">
                     <div class="timeline-node-dot"></div>
                     <div class="timeline-content-card">
                         <div class="timeline-icon-box">
                             <svg viewBox="0 0 24 24">
-                                <!-- Vintage Camera -->
                                 <rect x="3" y="7" width="18" height="13" rx="2" />
                                 <circle cx="12" cy="13.5" r="4" />
                                 <circle cx="12" cy="13.5" r="1.5" />
@@ -911,13 +696,11 @@
                     </div>
                 </div>
 
-                <!-- 3. Reception -->
                 <div class="timeline-node left">
                     <div class="timeline-node-dot"></div>
                     <div class="timeline-content-card">
                         <div class="timeline-icon-box">
                             <svg viewBox="0 0 24 24">
-                                <!-- Wedding Arch Canopy -->
                                 <path d="M6 20V10a6 6 0 0 1 12 0v10" />
                                 <path d="M6 10c1.5 2 3 5 3 10m9-10c-1.5 2-3 5-3 10" />
                                 <circle cx="12" cy="4" r="1.5" />
@@ -932,13 +715,11 @@
                     </div>
                 </div>
 
-                <!-- 4. Dinner -->
                 <div class="timeline-node right">
                     <div class="timeline-node-dot"></div>
                     <div class="timeline-content-card">
                         <div class="timeline-icon-box">
                             <svg viewBox="0 0 24 24">
-                                <!-- Plate, Fork, Knife -->
                                 <circle cx="12" cy="12" r="6" />
                                 <circle cx="12" cy="12" r="4.5" stroke-dasharray="2,2" />
                                 <path d="M3 8v3a1.5 1.5 0 0 0 1.5 1.5h0A1.5 1.5 0 0 0 6 11V8" />
@@ -957,13 +738,11 @@
                     </div>
                 </div>
 
-                <!-- 5. Party -->
                 <div class="timeline-node left">
                     <div class="timeline-node-dot"></div>
                     <div class="timeline-content-card">
                         <div class="timeline-icon-box">
                             <svg viewBox="0 0 24 24">
-                                <!-- Clinking Champagne Glasses -->
                                 <path d="M7 6l2 7a1.5 1.5 0 0 0 1.5 1H11 M9.5 14v5 M8 19h3" />
                                 <path d="M17 6l-2 7a1.5 1.5 0 0 1-1.5 1H13 M14.5 14v5 M13 19h3" />
                                 <line x1="12" y1="8" x2="12" y2="10" />
@@ -977,179 +756,42 @@
                     </div>
                 </div>
             </div>
-
-            <div class="timeline-footer-names">Rola & Ivan</div>
-        </div>
-    </section>
-
-    <section class="details">
-        <div class="card">
-            <h3 class="section-title">Reception</h3>
-            <p><strong>SUNDAY, JUL 26, 2026 AT 3 PM</strong></p>
-            <p class="venue-text">
-                Daluyan Community Resource Center<br>Naic, Cavite
-            </p>
-            <p class="italic-follow">Reception to Follow</p>
-            
-            <hr class="rustic-divider">
-
-            <div class="attire-section-header">
-                <h3 class="section-title" style="margin-bottom: 0;">Wedding</h3>
-                <span class="attire-script">Attire Guide</span>
-                <p>Thank you for celebrating with us!</p>
-            </div>
-
-            <div class="attire-image-wrapper" id="attireImgBtn">
-                <img src="wedding attire guide.jfif" alt="Wedding Attire Guide Infographic">
-                <div class="zoom-hint">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
-                    Tap to Zoom
-                </div>
-            </div>
-
-            <div>
-                <a href="wedding attire guide.jfif" download="Wedding_Attire_Guide.jfif" class="download-guide-btn">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 5px; vertical-align: middle;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
-                    Download Attire Guide
-                </a>
-            </div>
-
-            <!-- Lightbox Overlay -->
-            <div id="attireLightbox" class="attire-lightbox">
-                <span class="lightbox-close" id="lightboxClose">&times;</span>
-                <img class="lightbox-content" src="wedding attire guide.jfif" alt="Zoomed Wedding Attire Guide">
-            </div>
-
-            <hr class="rustic-divider">
-
-            <h3 class="section-title">A Note on Gifts</h3>
-            <p style="font-size: 0.95rem; font-style: italic; color: #635d54; max-width: 600px; margin: 10px auto 0; line-height: 1.7;">
-                "With all that we have, we've been truly blessed. Your presence and prayers serve all that we request, but if you desire to give us nonetheless, monetary gift is one messenger."
-            </p>
-
-            <div class="reminder-box">
-                <h4>A loving reminder</h4>
-                <p>We kindly request that this is an intimate celebration. Please understand that we can only accommodate those listed on the invitation.</p>
-                <span class="highlight-no">NO +1, THANK YOU FOR UNDERSTANDING.</span>
-            </div>
         </div>
     </section>
 
     <section class="rsvp-section">
         <div class="rsvp-container">
             <div class="rsvp-image"></div>
-            
-            <form id="rsvpForm" action="https://api.web3forms.com/submit" method="POST">
-                <input type="hidden" name="access_key" value="6acdb63c-5892-4826-8171-c741ce230b6d">
-
-
-                
-                <h2>Kindly RSVP</h2>
-                <p style="font-size: 0.95rem; margin-bottom: 25px;">
-                    A favor of your reply is requested from before <strong>July 20, 2026</strong>.<br>
-                    <span style="display: block; margin-top: 8px; font-size: 0.9rem; color: #8c7f6e;">Message us at 09669908354 or thru its messenger.</span>
-                </p>
+            <form action="YOUR_BACKEND_OR_SUBMIT_URL" method="POST">
+                <h2>RSVP</h2>
+                <p>Please let us know if you can make it.</p>
                 
                 <div class="form-group">
                     <label for="name">Full Name</label>
-                    <input type="text" id="name" name="name" required placeholder="Your Name">
+                    <input type="text" id="name" name="name" required placeholder="Juan Dela Cruz">
                 </div>
-
-
-
+                
                 <div class="form-group">
                     <label for="attendance">Will you attend?</label>
                     <select id="attendance" name="attendance" required>
                         <option value="" disabled selected>Select an option</option>
-                        <option value="Joyfully Accept">Joyfully Accept</option>
-                        <option value="Regretfully Decline">Regretfully Decline</option>
+                        <option value="yes">Yes, I will be there</option>
+                        <option value="no">No, I cannot make it</option>
                     </select>
                 </div>
 
-                <div class="form-group">
-                    <label for="seats">Reserved Seat/s</label>
-                    <select id="seats" name="seats">
-                        <option value="1 Seat">1 Seat</option>
-                        <option value="2 Seats">2 Seats</option>
-                    </select>
+                <div class="captcha-container">
+                    <div class="h-captcha" data-sitekey="10000000-ffff-ffff-ffff-000000000001"></div>
                 </div>
-
-                <div class="form-group">
-                    <label for="message">Message / Note (Optional)</label>
-                    <textarea id="message" name="message" rows="3" placeholder="Leave a message for the couple..."></textarea>
-                </div>
-
-                <div class="h-captcha" data-captcha="true"></div>
-
+                
                 <button type="submit">Submit RSVP</button>
-
-                <script src="https://web3forms.com/client/script.js" async defer></script>
             </form>
         </div>
     </section>
 
     <footer>
-        <p>Thank you for being a part of our lives! &nbsp;|&nbsp; #RolaAndIvan2026</p>
+        &copy; 2026 Rola & Ivan Wedding. All Rights Reserved.
     </footer>
 
-    <script>
-        const weddingDate = new Date("2026-07-26T15:00:00+08:00").getTime();
-        
-        const timer = setInterval(function() {
-            const now = new Date().getTime();
-            const distance = weddingDate - now;
-            
-            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-            if (distance < 0) {
-                clearInterval(timer);
-                document.getElementById("days").innerText = "00";
-                document.getElementById("hours").innerText = "00";
-                document.getElementById("minutes").innerText = "00";
-                document.getElementById("seconds").innerText = "00";
-                document.querySelector(".countdown-container h2").innerText = "We're Married!";
-                document.querySelector(".countdown").style.display = "none";
-            } else {
-                document.getElementById("days").innerText = days < 10 ? "0" + days : days;
-                document.getElementById("hours").innerText = hours < 10 ? "0" + hours : hours;
-                document.getElementById("minutes").innerText = minutes < 10 ? "0" + minutes : minutes;
-                document.getElementById("seconds").innerText = seconds < 10 ? "0" + seconds : seconds;
-            }
-        }, 1000);
-
-        // Lightbox functionality for Attire Guide
-        const attireImgBtn = document.getElementById("attireImgBtn");
-        const attireLightbox = document.getElementById("attireLightbox");
-        const lightboxClose = document.getElementById("lightboxClose");
-
-        if (attireImgBtn && attireLightbox) {
-            attireImgBtn.addEventListener("click", function() {
-                attireLightbox.classList.add("active");
-                document.body.style.overflow = "hidden"; // Prevent background scroll
-            });
-
-            const closeLightbox = function() {
-                attireLightbox.classList.remove("active");
-                document.body.style.overflow = ""; // Restore scroll
-            };
-
-            lightboxClose.addEventListener("click", closeLightbox);
-            attireLightbox.addEventListener("click", function(e) {
-                if (e.target === attireLightbox) {
-                    closeLightbox();
-                }
-            });
-            
-            // Allow closing with Escape key
-            document.addEventListener("keydown", function(e) {
-                if (e.key === "Escape" && attireLightbox.classList.contains("active")) {
-                    closeLightbox();
-                }
-            });
-        }
-    </script>
 </body>
 </html>
