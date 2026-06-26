@@ -1152,6 +1152,29 @@
             });
         }
     </script>
+<script src="https://www.youtube.com/iframe_api"></script>
+
+<script>
+let player;
+
+function onYouTubeIframeAPIReady() {
+    player = new YT.Player('prenupVideo');
+}
+
+const videoSection = document.querySelector('.video-section');
+
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (!entry.isIntersecting && player && player.pauseVideo) {
+            player.pauseVideo();
+        }
+    });
+}, {
+    threshold: 0.3
+});
+
+observer.observe(videoSection);
+</script>
 </body>
 </html>
 
