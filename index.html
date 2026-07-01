@@ -7,6 +7,7 @@
     <title>Our Wedding Invitation — Rola & Ivan</title>
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://www.youtube.com/iframe_api"></script>
     
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Alex+Brush&family=Great+Vibes&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Montserrat:wght@300;400;500;600;700&display=swap');
@@ -1061,6 +1062,11 @@
 </head>
 <body>
 
+    <audio id="bgMusic" loop>
+    <source src="Beautiful-in-white.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+</audio>
+
     <div class="custom-cursor" id="cc-ring"></div>
     <div class="custom-cursor-glow" id="cc-glow"></div>
 
@@ -1104,14 +1110,9 @@
 
     <section class="video-section reveal-section">
         <h2 class="script-header-anim">Our Prenup Video</h2>
-        <div class="video-wrapper">
-            <iframe 
-                src="https://www.youtube.com/embed/cFaV37iZ4E4?rel=0&modestbranding=1" 
-                title="Test Wedding Video"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                allowfullscreen>
-            </iframe>
-        </div>
+<div class="video-wrapper">
+    <div id="prenupVideo"></div>
+</div>
     </section>
 
     <section class="countdown-container reveal-section">
@@ -1138,7 +1139,24 @@
             <div class="timeline-pathway" id="timelinePathway">
                 <div class="timeline-progress-line" id="timelineProgress"></div>
 
-                
+                <div class="timeline-node left">
+                    <div class="timeline-node-dot"></div>
+                    <div class="timeline-content-card">
+                        <div class="timeline-icon-box">
+                            <svg viewBox="0 0 24 24">
+                                <ellipse cx="12" cy="16" rx="6" ry="3" />
+                                <path d="M6 16v3.5c0 1.9 2.7 3.5 6 3.5s6-1.6 6-3.5V16" />
+                                <rect x="10" y="8" width="4" height="8" rx="1" />
+                                <line x1="12" y1="8" x2="12" y2="5" />
+                                <path d="M12 5c-0.6-0.8-1-1.8-0.5-2.5.8.5 1 1.5.5 2.5z" stroke="#5c4533" fill="#5c4533" />
+                            </svg>
+                        </div>
+                        <div class="timeline-text-group">
+                            <div class="timeline-event-name">Ceremony</div>
+                            <div class="timeline-event-time">at 3:00 PM</div>
+                        </div>
+                    </div>
+                </div>
 
                 <div class="timeline-node right">
                     <div class="timeline-node-dot"></div>
@@ -1220,24 +1238,6 @@
                     </div>
                 </div>
             </div>
-            <div class="timeline-node left">
-                    <div class="timeline-node-dot"></div>
-                    <div class="timeline-content-card">
-                        <div class="timeline-icon-box">
-                            <svg viewBox="0 0 24 24">
-                                <ellipse cx="12" cy="16" rx="6" ry="3" />
-                                <path d="M6 16v3.5c0 1.9 2.7 3.5 6 3.5s6-1.6 6-3.5V16" />
-                                <rect x="10" y="8" width="4" height="8" rx="1" />
-                                <line x1="12" y1="8" x2="12" y2="5" />
-                                <path d="M12 5c-0.6-0.8-1-1.8-0.5-2.5.8.5 1 1.5.5 2.5z" stroke="#5c4533" fill="#5c4533" />
-                            </svg>
-                        </div>
-                        <div class="timeline-text-group">
-                            <div class="timeline-event-name">Ceremony</div>
-                            <div class="timeline-event-time">at 3:00 PM</div>
-                        </div>
-                    </div>
-                </div>
 
             <div class="timeline-footer-names">Rola & Ivan</div>
         </div>
@@ -1634,38 +1634,83 @@
             }
         }
 
-        // --- 8. AUDIO EMBED HANDLING INVOCATION ---
-        const musicBtn = document.getElementById('musicBtn');
-        let audioCtx = null;
-        let isPlaying = false;
+        // --- 8. FLOATING AUDIO & YOUTUBE VIDEO INTEGRATION ENGINE ---
+        const bgMusic = document.getElementById("bgMusic");
+        const musicBtn = document.getElementById("musicBtn");
         
-        musicBtn.addEventListener('click', () => {
-            // Instantiate background tone placeholders elegantly without layout disruptions
-            if(!audioCtx) {
-                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                // Custom organic soft oscillator configurations mimicking cinematic flute sound design
-                const osc = audioCtx.createOscillator();
-                const gain = audioCtx.createGain();
-                osc.type = 'sine';
-                osc.frequency.setValueAtTime(220, audioCtx.currentTime); // Low warm a-string tone harmonic
-                gain.gain.setValueAtTime(0.04, audioCtx.currentTime); // Whisper volume levels strictly
-                osc.connect(gain);
-                gain.connect(audioCtx.destination);
-                osc.start();
-                isPlaying = true;
-                musicBtn.style.borderColor = 'var(--primary-rustic)';
-            } else {
-                if(isPlaying) {
-                    audioCtx.suspend();
+        let isPlaying = false;
+        let isMusicMutedByVideo = false; // Flag kung video ang nag-pause sa background kanta
+        let ytPlayer;
+
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        let audioCtx;
+
+        function initAudioContext() {
+            if (!audioCtx) {
+                audioCtx = new AudioContext();
+            }
+        }
+
+        if (musicBtn && bgMusic) {
+            musicBtn.addEventListener("click", function() {
+                initAudioContext();
+                
+                if (audioCtx && audioCtx.state === 'suspended') {
+                    audioCtx.resume();
+                }
+
+                if (isPlaying) {
+                    bgMusic.pause();
                     isPlaying = false;
                     musicBtn.style.borderColor = 'rgba(179, 134, 76, 0.3)';
                 } else {
-                    audioCtx.resume();
+                    bgMusic.play().catch(e => console.log("Audio play prevented:", e));
                     isPlaying = true;
                     musicBtn.style.borderColor = 'var(--primary-rustic)';
                 }
+                isMusicMutedByVideo = false; // Kapag manu-manong pinindot, i-reset ang override
+            });
+        }
+
+        // Ito ang awtomatikong mag-co-convert sa <div id="prenupVideo"> para maging prenup video ninyo
+        function onYouTubeIframeAPIReady() {
+            ytPlayer = new YT.Player('prenupVideo', {
+                videoId: 'cFaV37iZ4E4', // Inyong totoong Prenup Video ID
+                playerVars: {
+                    'rel': 0,
+                    'modestbranding': 1,
+                    'playsinline': 1
+                },
+                events: {
+                    'onStateChange': onPlayerStateChange
+                }
+            });
+        }
+
+        // Taga-subaybay kung pinindot ang play o pause sa prenup video
+        function onPlayerStateChange(event) {
+            // Kapag PINLAY ang prenup video (State 1)
+            if (event.data == YT.PlayerState.PLAYING) {
+                if (isPlaying) {
+                    bgMusic.pause();
+                    isPlaying = false;
+                    isMusicMutedByVideo = true; // Markahan na video ang nag-patigil
+                    if (musicBtn) musicBtn.style.borderColor = 'rgba(179, 134, 76, 0.3)';
+                }
+            } 
+            // Kapag NAPAUSE (State 2) o NATAPOS (State 0) ang video
+            else if (event.data == YT.PlayerState.PAUSED || event.data == YT.PlayerState.ENDED) {
+                // Magpapatuloy lang ang kanta kung ang video ang nag-stop nito kanina
+                if (isMusicMutedByVideo) {
+                    if (bgMusic) {
+                        bgMusic.play().catch(e => console.log("Audio resume prevented:", e));
+                    }
+                    isPlaying = true;
+                    isMusicMutedByVideo = false; // I-reset ang flag
+                    if (musicBtn) musicBtn.style.borderColor = 'var(--primary-rustic)';
+                }
             }
-        });
+        }
 
         // --- 9. LIGHTBOX COMPONENT CORE MODAL OPERATIONS ---
         const attireImgBtn = document.getElementById("attireImgBtn");
