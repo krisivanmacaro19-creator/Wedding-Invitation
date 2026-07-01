@@ -1073,19 +1073,35 @@
             position: relative;
         }
 
-/* --- CRITICAL TIMELINE FIX (DESKTOP & CP) --- */
-/* Itago ang lahat ng card sa simula pa lang (kaliwa man o kanan) */
-.timeline-content-card {
-    opacity: 0 !important;
-    transform: translateY(40px) scale(0.92) !important;
-    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1) !important;
-    animation: none !important; /* Pinapatay ang lumang nag-uunahang CSS keyframes */
-}
+/* --- THE ULTIMATE PHONE/CP TIMELINE FIX --- */
+@media screen and (max-width: 768px) {
+    /* Patayin ang lahat ng dating naglo-lokong CSS animations at delays */
+    .timeline-node.left .timeline-content-card,
+    .timeline-node.right .timeline-content-card {
+        animation: none !important;
+        animation-delay: 0s !important;
+        position: relative !important;
+        left: 0 !important;
+        right: 0 !important;
+        width: 100% !important;
+        opacity: 0 !important;
+        transform: translateY(20px) !important;
+        transition: opacity 0.6s ease-out, transform 0.6s ease-out !important;
+    }
 
-/* Lalabas lang nang swabe kapag binigyan ng 'active-node' ng JavaScript gamit ang scroll */
-.timeline-node.active-node .timeline-content-card {
-    opacity: 1 !important;
-    transform: translateY(0) scale(1) !important;
+    /* Pilitin ang timeline pathway na maging tuwid na pila pababa para sa CP */
+    .timeline-node {
+        width: 100% !important;
+        left: 0 !important;
+        padding-left: 45px !important;
+        padding-right: 15px !important;
+    }
+
+    /* Lalabas lang ang card kapag mismong ang scroll ay umabot na doon */
+    .timeline-node.active-node .timeline-content-card {
+        opacity: 1 !important;
+        transform: translateY(0) !important;
+    }
 }
     </style>
 </head>
@@ -1500,8 +1516,8 @@
 
         function updateTimelineEngine() {
             const pathwayRect = timelinePathway.getBoundingClientRect();
-            // Trigger Point: 85% ng screen mula sa itaas (sakto sa thumb-scroll ng CP at mouse ng PC)
-            const triggerPoint = window.innerHeight * 0.85; 
+            // Mas sensitibong trigger point: 80% mula sa itaas ng screen ng CP/PC
+            const triggerPoint = window.innerHeight * 0.8; 
 
             if (pathwayRect.top < triggerPoint) {
                 const totalHeight = timelinePathway.offsetHeight;
@@ -1514,7 +1530,7 @@
                 timelineNodes.forEach((node) => {
                     const nodeRect = node.getBoundingClientRect();
                     
-                    // Napakahigpit na check: Dapat ang saktong itaas ng CARD ang pumasok sa view bago mag-animate
+                    // Napakahigpit na check: Ang mismong tuldok (dot) o card dapat ang pumasok sa view bago mag-active
                     if (nodeRect.top < triggerPoint) {
                         node.classList.add('active-node');
                     } else {
