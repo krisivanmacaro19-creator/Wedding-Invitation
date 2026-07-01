@@ -1268,7 +1268,7 @@
                     </div>
                 </div>
             </div>
-            
+
 
             <div class="timeline-node left">
     <div class="timeline-node-dot"></div>
@@ -1276,12 +1276,12 @@
         
         <div class="timeline-icon-box">
             <svg viewBox="0 0 24 24">
-                <ellipse cx="12" cy="16" rx="6" ry="3" />
-                <path d="M6 16v3.5c0 1.9 2.7 3.5 6 3.5s6-1.6 6-3.5V16" />
-                <rect x="10" y="8" width="4" height="8" rx="1" />
-                <line x1="12" y1="8" x2="12" y2="5" stroke="#5c4533" stroke-width="1.5" stroke-linecap="round" />
-                <path d="M12 5c-0.6-0.8-1-1.8-0.5-2.5.8.5 1 1.5.5 2.5z" stroke="#5c4533" fill="#5c4533" />
-            </svg>
+    <ellipse cx="12" cy="16" rx="6" ry="3" />
+    <path d="M6 16v3.5c0 1.9 2.7 3.5 6 3.5s6-1.6 6-3.5V16" />
+    <rect x="10" y="8" width="4" height="8" rx="1" />
+    <line x1="12" y1="8" x2="12" y2="5" stroke="#5c4533" stroke-width="1.5" stroke-linecap="round" />
+    <path d="M12 5c-0.6-0.8-1-1.8-0.5-2.5.8.5 1 1.5.5 2.5z" stroke="#5c4533" fill="#5c4533" />
+</svg>
         </div>
 
         <div class="timeline-text-group">
@@ -1683,12 +1683,12 @@
             }
         }
 
-        // --- 8. FLOATING AUDIO & YOUTUBE VIDEO INTEGRATION ENGINE ---
+        // --- 8. FLOATING AUDIO & SMART AUTOPLAY INTEGRATION ENGINE ---
         const bgMusic = document.getElementById("bgMusic");
         const musicBtn = document.getElementById("musicBtn");
         
         let isPlaying = false;
-        let isMusicMutedByVideo = false; // Flag kung video ang nag-pause sa background kanta
+        let isMusicMutedByVideo = false;
         let ytPlayer;
 
         const AudioContext = window.AudioContext || window.webkitAudioContext;
@@ -1700,10 +1700,34 @@
             }
         }
 
+        // SMART AUTOPLAY: Kusang tutugtog sa unang interaction (scroll o touch) ng bisita sa CP/Desktop
+        function startAutoplay() {
+            initAudioContext();
+            if (audioCtx && audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+            if (!isPlaying && bgMusic) {
+                bgMusic.play().then(() => {
+                    isPlaying = true;
+                    if (musicBtn) musicBtn.style.borderColor = 'var(--primary-rustic)';
+                    // Tanggalin ang mga taga-bantay kapag tumutugtog na para hindi paulit-ulit
+                    window.removeEventListener('scroll', startAutoplay);
+                    window.removeEventListener('touchstart', startAutoplay);
+                    window.removeEventListener('click', startAutoplay);
+                }).catch(e => console.log("Autoplay waiting for active interaction..."));
+            }
+        }
+
+        // Abangan ang unang galaw ng bisita para i-play ang kanta
+        window.addEventListener('scroll', startAutoplay, { passive: true });
+        window.addEventListener('touchstart', startAutoplay, { passive: true });
+        window.addEventListener('click', startAutoplay, { passive: true });
+
+        // Manual click engine para sa floating music button (kung gusto nila i-pause)
         if (musicBtn && bgMusic) {
-            musicBtn.addEventListener("click", function() {
+            musicBtn.addEventListener("click", function(e) {
+                e.stopPropagation(); // Iwasan ang conflict sa autoplay window events
                 initAudioContext();
-                
                 if (audioCtx && audioCtx.state === 'suspended') {
                     audioCtx.resume();
                 }
@@ -1717,14 +1741,14 @@
                     isPlaying = true;
                     musicBtn.style.borderColor = 'var(--primary-rustic)';
                 }
-                isMusicMutedByVideo = false; // Kapag manu-manong pinindot, i-reset ang override
+                isMusicMutedByVideo = false;
             });
         }
 
-        // Ito ang awtomatikong mag-co-convert sa <div id="prenupVideo"> para maging prenup video ninyo
+        // YouTube Player Integration for Prenup Video
         function onYouTubeIframeAPIReady() {
             ytPlayer = new YT.Player('prenupVideo', {
-                videoId: 'cFaV37iZ4E4', // Inyong totoong Prenup Video ID
+                videoId: 'cFaV37iZ4E4',
                 playerVars: {
                     'rel': 0,
                     'modestbranding': 1,
@@ -1736,26 +1760,22 @@
             });
         }
 
-        // Taga-subaybay kung pinindot ang play o pause sa prenup video
         function onPlayerStateChange(event) {
-            // Kapag PINLAY ang prenup video (State 1)
             if (event.data == YT.PlayerState.PLAYING) {
                 if (isPlaying) {
                     bgMusic.pause();
                     isPlaying = false;
-                    isMusicMutedByVideo = true; // Markahan na video ang nag-patigil
+                    isMusicMutedByVideo = true;
                     if (musicBtn) musicBtn.style.borderColor = 'rgba(179, 134, 76, 0.3)';
                 }
             } 
-            // Kapag NAPAUSE (State 2) o NATAPOS (State 0) ang video
             else if (event.data == YT.PlayerState.PAUSED || event.data == YT.PlayerState.ENDED) {
-                // Magpapatuloy lang ang kanta kung ang video ang nag-stop nito kanina
                 if (isMusicMutedByVideo) {
                     if (bgMusic) {
                         bgMusic.play().catch(e => console.log("Audio resume prevented:", e));
                     }
                     isPlaying = true;
-                    isMusicMutedByVideo = false; // I-reset ang flag
+                    isMusicMutedByVideo = false;
                     if (musicBtn) musicBtn.style.borderColor = 'var(--primary-rustic)';
                 }
             }
