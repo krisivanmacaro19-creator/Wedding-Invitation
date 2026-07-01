@@ -969,6 +969,20 @@
         .timeline-node.left .timeline-content-card { right: calc(50% + 25px); }
         .timeline-node.right .timeline-content-card { left: calc(50% + 25px); }
 
+        /* --- CP & DESKTOP RESPONSIVE ANIMATION STATES --- */
+.timeline-content-card {
+    opacity: 0;
+    /* Manggagaling ng kaunti sa ilalim para sa magandang transition */
+    transform: translateY(30px) scale(0.95); 
+    transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Kapag nadanaan na ng scroll (sa CP man o PC), ito ang magpapakita ng card */
+.timeline-node.active-node .timeline-content-card {
+    opacity: 1 !important;
+    transform: translateY(0) scale(1) !important;
+}
+
         .timeline-icon-box {
             width: 50px; height: 50px;
             display: flex; align-items: center; justify-content: center;
@@ -1222,7 +1236,7 @@
                 </div>
 
 
-                <div class="timeline-node left">
+               <div class="timeline-node left">
                     <div class="timeline-node-dot"></div>
                     <div class="timeline-content-card">
                         <div class="timeline-icon-box">
@@ -1240,8 +1254,6 @@
                     </div>
                 </div>
             </div>
-
-
 
             <div class="timeline-footer-names">Rola & Ivan</div>
         </div>
@@ -1472,32 +1484,30 @@
         const timelineNodes = document.querySelectorAll('.timeline-node');
 
         function updateTimelineEngine() {
-            if (!timelinePathway) return;
-            
             const pathwayRect = timelinePathway.getBoundingClientRect();
-            const viewportHeight = window.innerHeight;
-            
-            // Calculate progress via top entry context lines mapped mathematically
-            const triggerLine = viewportHeight * 0.65;
-            const pathwayTopRelative = pathwayRect.top - triggerLine;
-            const pathwayHeight = pathwayRect.height;
-            
-            let progressPercentage = (-pathwayTopRelative / pathwayHeight) * 100;
-            progressPercentage = Math.max(0, Math.min(100, progressPercentage));
-            
-            timelineProgress.style.height = `${progressPercentage}%`;
+            // 85% ng taas ng screen ang trigger point — swak na swak sa scrolling ng cellphone
+            const triggerPoint = window.innerHeight * 0.85; 
 
-            // Active State Evaluation checks based on dynamic bounding parameters
-            timelineNodes.forEach(node => {
-                const nodeTop = node.offsetTop;
-                const progressTargetHeight = (progressPercentage / 100) * pathwayHeight;
-                
-                if (progressTargetHeight >= nodeTop - 10) {
-                    node.classList.add('active-node');
-                } else {
-                    node.classList.remove('active-node');
-                }
-            });
+            if (pathwayRect.top < triggerPoint) {
+                const totalHeight = timelinePathway.offsetHeight;
+                const relativeScroll = triggerPoint - pathwayRect.top;
+                let currentProgress = (relativeScroll / totalHeight) * 100;
+                currentProgress = Math.max(0, Math.min(100, currentProgress));
+
+                timelineProgress.style.height = `${currentProgress}%`;
+
+                timelineNodes.forEach((node) => {
+                    const nodeRect = node.getBoundingClientRect();
+                    
+                    // Kung ang mismong node/card ay pumasok na sa trigger point ng screen
+                    if (nodeRect.top < triggerPoint) {
+                        node.classList.add('active-node');
+                    } else {
+                        // Tinatanggal ang active class kapag ini-scroll pabalik sa itaas (optional)
+                        node.classList.remove('active-node'); 
+                    }
+                });
+            }
         }
         window.addEventListener('scroll', () => { requestAnimationFrame(updateTimelineEngine); });
 
