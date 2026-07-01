@@ -1072,6 +1072,21 @@
             border-top: 1px solid rgba(179, 134, 76, 0.1);
             position: relative;
         }
+
+/* --- CRITICAL TIMELINE FIX (DESKTOP & CP) --- */
+/* Itago ang lahat ng card sa simula pa lang (kaliwa man o kanan) */
+.timeline-content-card {
+    opacity: 0 !important;
+    transform: translateY(40px) scale(0.92) !important;
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    animation: none !important; /* Pinapatay ang lumang nag-uunahang CSS keyframes */
+}
+
+/* Lalabas lang nang swabe kapag binigyan ng 'active-node' ng JavaScript gamit ang scroll */
+.timeline-node.active-node .timeline-content-card {
+    opacity: 1 !important;
+    transform: translateY(0) scale(1) !important;
+}
     </style>
 </head>
 <body>
@@ -1485,7 +1500,7 @@
 
         function updateTimelineEngine() {
             const pathwayRect = timelinePathway.getBoundingClientRect();
-            // 85% ng taas ng screen ang trigger point — swak na swak sa scrolling ng cellphone
+            // Trigger Point: 85% ng screen mula sa itaas (sakto sa thumb-scroll ng CP at mouse ng PC)
             const triggerPoint = window.innerHeight * 0.85; 
 
             if (pathwayRect.top < triggerPoint) {
@@ -1499,12 +1514,11 @@
                 timelineNodes.forEach((node) => {
                     const nodeRect = node.getBoundingClientRect();
                     
-                    // Kung ang mismong node/card ay pumasok na sa trigger point ng screen
+                    // Napakahigpit na check: Dapat ang saktong itaas ng CARD ang pumasok sa view bago mag-animate
                     if (nodeRect.top < triggerPoint) {
                         node.classList.add('active-node');
                     } else {
-                        // Tinatanggal ang active class kapag ini-scroll pabalik sa itaas (optional)
-                        node.classList.remove('active-node'); 
+                        node.classList.remove('active-node');
                     }
                 });
             }
