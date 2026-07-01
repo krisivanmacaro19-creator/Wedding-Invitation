@@ -1107,10 +1107,7 @@
 </head>
 <body>
 
-    <audio id="bgMusic" loop>
-    <source src="Beautiful-in-white.mp3" type="audio/mpeg">
-    Your browser does not support the audio element.
-</audio>
+<audio id="bgMusic" src="Beautiful-in-white.mp3" loop muted playsinline></audio>
 
     <div class="custom-cursor" id="cc-ring"></div>
     <div class="custom-cursor-glow" id="cc-glow"></div>
@@ -1810,6 +1807,46 @@
                 }
             });
         }
+
+        document.addEventListener("DOMContentLoaded", function () {
+    const bgMusic = document.getElementById("bgMusic");
+
+    // Function para puwersahang patugtugin at i-unmute ang kanta
+    function forceAutoplay() {
+        if (bgMusic) {
+            bgMusic.muted = false; // Tanggalin ang pagkaka-mute
+            bgMusic.play().then(() => {
+                console.log("Autoplay started successfully!");
+                // Kapag tumugtog na, tatanggalin na natin ang mga taga-bantay para hindi mag-loko
+                removeAllListeners();
+            }).catch((error) => {
+                console.log("Browser blocked immediate playback, waiting for next touch:", error);
+            });
+        }
+    }
+
+    // Listahan ng mga galaw ng tao na gagamitin natin para mag-trigger ang music
+    function addAllListeners() {
+        window.addEventListener('click', forceAutoplay);
+        window.addEventListener('touchstart', forceAutoplay);
+        window.addEventListener('scroll', forceAutoplay);
+        window.addEventListener('mousemove', forceAutoplay);
+    }
+
+    function removeAllListeners() {
+        window.removeEventListener('click', forceAutoplay);
+        window.removeEventListener('touchstart', forceAutoplay);
+        window.removeEventListener('scroll', forceAutoplay);
+        window.removeEventListener('mousemove', forceAutoplay);
+    }
+
+    // Subukan patugtugin agad pagka-load (gagana ito sa ilang desktop browser)
+    forceAutoplay();
+
+    // Kung harangan ng browser, abangan ang unang scroll o touch ng bisita
+    addAllListeners();
+});
     </script>
+
 </body>
 </html>
